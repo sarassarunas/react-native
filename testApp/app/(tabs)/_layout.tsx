@@ -18,6 +18,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
+        // headerTitleAlign:"center",
         tabBarStyle: Platform.select({
           ios: {
             // Use a transparent background on iOS to show the blur effect
@@ -34,19 +35,19 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="contact"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Contacts',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.crop.circle" color={color} />,
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="index copy"
         options={{
           title: 'BackUp',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="chevron.left" color={color} />,
         }}
-      />
+      /> */}
     </Tabs>
   );
 }

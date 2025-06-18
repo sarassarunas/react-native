@@ -1,12 +1,14 @@
-import { View, Text, StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native'
 import React from 'react'
 import BGImage from "@/assets/images/appBG.jpg";
+import { Link } from 'expo-router';
 
 const app = () => {
   return (
     <View style={styles.container}>
       <ImageBackground source={BGImage} resizeMode="cover" style={styles.image}>
-      <Text style={styles.text}>App</Text>
+      <Text style={styles.title}>App</Text>
+      <Link href="/contact" style={{marginHorizontal:'auto'}} asChild><Pressable style={styles.button}><Text style={styles.buttonText}>Contact Us</Text></Pressable></Link>
       </ImageBackground>
     </View>
   )
@@ -18,7 +20,7 @@ const styles = StyleSheet.create({
   container:{
     flex: 1,
     flexDirection: 'column',
-    marginTop: 40,
+    
   },
   image: {
     width: '100%',
@@ -28,11 +30,36 @@ const styles = StyleSheet.create({
     justifyContent:'center',
 
   },
-  text:{
+  title:{
     color: 'white',
     fontSize: 42,
     fontWeight: 'bold',
     textAlign: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)',
-  }
+    marginBottom: 120
+  },
+  link:{
+    color: 'white',
+    fontSize: 42,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    padding: 4,
+  },
+  button:{
+    height:60,
+    borderRadius:20,
+    backgroundColor: 'rgba(0,0,0,0.75)',
+    padding:6,
+    justifyContent:'center'
+  },
+  buttonText:{
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    padding: 4,
+  },
+  
 })
