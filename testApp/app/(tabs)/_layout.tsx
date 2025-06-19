@@ -37,6 +37,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="contact"
         options={{
+          headerShown: true,
           title: 'Contacts',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="person.crop.circle" color={color} />,
         }}
