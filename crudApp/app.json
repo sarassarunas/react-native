@@ -16,11 +16,13 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.saras.sarunas.crudApp"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
+      "name": "Todo List",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -37,6 +39,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e1e5efe4-fdb1-4a70-b37e-955c161fd64c"
+      }
+    },
+    "owner": "saras.sarunas"
   }
 }

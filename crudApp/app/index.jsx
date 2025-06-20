@@ -1,8 +1,10 @@
-import { Text, View, TextInput, Pressable, StyleSheet, FlatList } from "react-native";
+import { Text, View, TextInput, Pressable, StyleSheet, FlatList, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useContext, useEffect } from "react";
 import { ThemeContext } from "@/context/ThemeContext";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
+import { useRouter } from "expo-router";
 
 import { Inter_500Medium, useFonts } from "@expo-google-fonts/inter";
 import Animated, { LinearTransition } from "react-native-reanimated";
@@ -18,6 +20,7 @@ export default function Index() {
 
   const [todos, setTodos] = useState([]);
   const [text, setText] = useState('');
+  const router = useRouter();
 
   const [loaded, error] = useFonts({
     Inter_500Medium,
@@ -25,6 +28,12 @@ export default function Index() {
 
 
   const { colorScheme, setColorScheme, theme} = useContext(ThemeContext)
+
+  useEffect(()=>{
+    if(Platform.OS==='web') {
+      document.title = "Todo list";
+    }
+  },[]);
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -63,7 +72,7 @@ export default function Index() {
   const styles = createStyles(theme, colorScheme);
 
   const addTodo = () => {
-    if(text) {
+    if(text.trim()) {
       const newId = todos.length>0?todos[0].id+1:1;
       setTodos([{id:newId, task: text.trim(), completed: false}, ...todos]);
       setText('');
@@ -80,12 +89,23 @@ export default function Index() {
     setTodos(todos.filter(todo=>todo.id !==id))
   }
 
+  const handlePress = (id) => {
+    router.push(`/todos/${id}`)
+  }
+
+
   const renderItem = ({item}) => (
     <View style={styles.todoItem}>
-      <Text 
-      style={[styles.todoText, item.completed && styles.completedText]}
-      onPress={()=> toggleTodo(item.id)}
-      >{item.task}</Text>
+      <Pressable style={{flex: 1 , marginRight: 40}}
+        onPress={()=> handlePress(item.id)} 
+        onLongPress={()=> toggleTodo(item.id)}
+      >
+        <Text 
+          style={[styles.todoText, item.completed && styles.completedText]}
+          
+          >{item.task}
+        </Text>
+      </Pressable>
       <Pressable onPress={()=>removeTodo(item.id)}>
         <MaterialCommunityIcons name="delete-alert" size={36} color="red" selectable={undefined}/>
       </Pressable>
@@ -107,8 +127,8 @@ export default function Index() {
         </Pressable>
         <Pressable
           onPress={()=> setColorScheme(colorScheme === 'light' ? 'dark' : 'light')} style={{marginLeft:10}}>
-          {colorScheme==='dark'?<Octicons name="moon" size={36} color={theme.text} selectable={undefined} style={{width:36}}/> :
-            <Octicons name="sun" size={36} color={theme.text} selectable={undefined} style={{width:36}}/>
+          {colorScheme==='dark'?<Octicons name="sun" size={36} color={theme.text} selectable={undefined} style={{width:36}}/> :
+            <Octicons name="moon" size={36} color={theme.text} selectable={undefined} style={{width:36}}/>
           }
         </Pressable>
       </View>
@@ -175,6 +195,8 @@ function createStyles(theme, colorScheme){
     maxWidth: 1024,
     marginHorizontal:'auto',
     pointerEvents:'auto',
+    
+    
 
   },
   todoText:{
@@ -182,6 +204,7 @@ function createStyles(theme, colorScheme){
     fontSize:18,
     fontFamily:'Inter_500Medium',
     color:theme.text,
+    
   },
   completedText:{
     textDecorationLine: 'line-through',
